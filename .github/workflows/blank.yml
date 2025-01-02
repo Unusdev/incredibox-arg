@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery ARG</title>
+    <style>
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: "Courier New", monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-shadow: 0 0 10px #0f0;
+        }
+
+        a {
+            color: #0f0;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            color: #ff0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .console {
+            width: 80%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border: 2px solid #0f0;
+            box-shadow: 0 0 15px #0f0;
+            white-space: pre-wrap;
+            overflow-y: scroll;
+            height: 300px;
+        }
+
+        .input-container {
+            margin-top: 20px;
+        }
+
+        input {
+            background: #000;
+            border: 2px solid #0f0;
+            color: #0f0;
+            padding: 10px;
+            font-size: 16px;
+            outline: none;
+            width: 300px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Game</h1>
+
+    <div class="console" id="console">
+        > Type "start" to begin...
+    </div>
+
+    <div class="input-container">
+        <input type="text" id="userInput" placeholder="Enter command...">
+    </div>
+
+    <script>
+        const consoleElement = document.getElementById("console");
+        const userInput = document.getElementById("userInput");
+
+        const clues = {
+            start: "The game has begun. Find the next clue by typing 'clue'.",
+            clue: "The answer lies within. Try typing 'unlock'.",
+            unlock: "You've unlocked the secret: <a href='https://github.com'>Hidden Repository</a>"
+        };
+
+        userInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                const input = userInput.value.toLowerCase();
+                userInput.value = "";
+
+                if (clues[input]) {
+                    consoleElement.innerHTML += `\n> ${input}\n${clues[input]}`;
+                } else {
+                    consoleElement.innerHTML += `\n> ${input}\nUnknown command.`;
+                }
+
+                consoleElement.scrollTop = consoleElement.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
